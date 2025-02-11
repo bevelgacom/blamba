@@ -199,28 +199,8 @@ END:VCALENDAR";
 		if (in_array($sms_from, $config["sms_sender_allowlist_override"]))
 			return true;
 
-		// German cellular networks (covered by flatrate billing)
-		if (in_array(substr($sms_from, 0, 6), [
-			"+49151",
-			"+49155",
-			"+49158",
-			"+49160",
-			"+49170",
-			"+49171",
-			"+49175",
-			"+49152",
-			"+49162",
-			"+49172",
-			"+49173",
-			"+49174",
-			"+49157",
-			"+49159",
-			"+49163",
-			"+49176",
-			"+49177",
-			"+49178",
-			"+49179",
-		]))
+		// Belgian phone numbers starting with +324
+		if (substr($sms_from, 0, 4) == "+324")
 			return true;
 
 		return false;
