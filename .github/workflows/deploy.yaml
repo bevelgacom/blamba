@@ -1,0 +1,16 @@
+name: Update Bevelgacom Deployment
+
+on:
+  push:
+    branches:
+      - bevelgacom
+
+jobs:
+  update-bevelgacom:
+    runs-on: self-hosted
+
+    steps:
+    - name: Pull latest changes
+      run: |
+        cd /var/www/html
+        sudo git pull origin bevelgacom
