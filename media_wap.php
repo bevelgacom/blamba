@@ -68,6 +68,11 @@ function download_file($file)
     if (file_exists($file))
     {
         header('Content-Type: ' . mime_content_type($file));
+        // if has a .jar extension, we need to force it to "application/java-archive" to make it work on some devices
+        if (pathinfo($file, PATHINFO_EXTENSION) == "jar")
+        {
+            header('Content-Type: application/java-archive');
+        }
         header('Content-Length: ' . filesize($file));
         readfile($file);
         exit;
