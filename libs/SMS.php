@@ -1,9 +1,5 @@
 <?php
 
-$EU_PREFIXES = [
-	"43", "32", "359", "385", "357", "420", "45", "372", "358", "33", "49", "30", "36", "354", "353", "39", "371", "423", "370", "352", "356", "31", "47", "48", "351", "40", "421", "386", "34", "46"
-];
-
 class SMS
 {
 	static function send_text_sms($gateway, $destination, $data)
@@ -191,7 +187,6 @@ END:VCALENDAR";
 	static function check_if_sender_is_allowed($gateway, $sms_from)
 	{
 		global $config;
-		global $EU_PREFIXES;
 
 		// Eventphone Number
 		if (strlen($sms_from) == 4)
@@ -210,7 +205,9 @@ END:VCALENDAR";
 			return true;
 
 		if ($gateway["kannel_smsc"] == "de") {
-			// allow all EU numbers
+			$EU_PREFIXES = [
+				"43", "32", "359", "385", "357", "420", "45", "372", "358", "33", "49", "30", "36", "354", "353", "39", "371", "423", "370", "352", "356", "31", "47", "48", "351", "40", "421", "386", "34", "46"
+			];
 			foreach ($EU_PREFIXES as $prefix)
 			{	
 				$prefix = "+" . $prefix;
