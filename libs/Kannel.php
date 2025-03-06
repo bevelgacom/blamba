@@ -33,6 +33,7 @@ class Kannel
 
 		$data["username"] = $gateway["kannel_username"];
 		$data["password"] = $gateway["kannel_password"];
+		$data["smsc"] = $gateway["kannel_smsc"];
 		$data["from"] = $gateway["sender_msn"];
 
 		$ch = curl_init();
