@@ -1,4 +1,9 @@
 <?php
+
+$EU_PREFIXES = [
+	"43", "32", "359", "385", "357", "420", "45", "372", "358", "33", "49", "30", "36", "354", "353", "39", "371", "423", "370", "352", "356", "31", "47", "48", "351", "40", "421", "386", "34", "46"
+];
+
 class SMS
 {
 	static function send_text_sms($gateway, $destination, $data)
@@ -183,7 +188,7 @@ END:VCALENDAR";
 		return $smsarray;
 	}
 
-	static function check_if_sender_is_allowed($sms_from)
+	static function check_if_sender_is_allowed($gateway, $sms_from)
 	{
 		global $config;
 
@@ -203,6 +208,17 @@ END:VCALENDAR";
 		if (substr($sms_from, 0, 4) == "+324")
 			return true;
 
+		if ($gateway["kannel_smsc"] == "de") {
+			// allow all EU numbers
+			foreach ($EU_PREFIXES as $prefix)
+			{	
+				$prefix = "+" . $prefix;
+				if (substr($sms_from, 0, strlen($prefix)) == $prefix)
+					return true;
+			}
+
+		}
+
 		return false;
 	}
 
@@ -210,7 +226,7 @@ END:VCALENDAR";
 	{
 		Logging::log("parse_inbound_sms", $sms_message, $sms_from);
 
-		if (!self::check_if_sender_is_allowed($sms_from))
+		if (!self::check_if_sender_is_allowed($gateway,$sms_from))
 		{
 			error_log("Received SMS with content " . $sms_message . " from unallowed sender " . $sms_from);
 			Logging::log("unallowed sender, rejected", $sms_message, $sms_from);
