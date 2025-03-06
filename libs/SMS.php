@@ -191,6 +191,7 @@ END:VCALENDAR";
 	static function check_if_sender_is_allowed($gateway, $sms_from)
 	{
 		global $config;
+		global $EU_PREFIXES;
 
 		// Eventphone Number
 		if (strlen($sms_from) == 4)
