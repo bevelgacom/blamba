@@ -13,4 +13,6 @@ jobs:
     - name: Pull latest changes
       run: |
         cd /var/www/html
+        sudo git stash
         sudo git pull origin bevelgacom
+        sudo git stash pop
