@@ -98,7 +98,10 @@ if (isset($_POST["type"]))
 			}
 			break;
 		case 'j2me':
-			if (($error = sanity_check_file($_FILES["file-java"], ["application/java-archive", "application/x-java-applet", "application/java", "application/zip"])) === false)
+			error_log("J2ME upload case");
+			$error = sanity_check_file($_FILES["file-java"], ["application/java-archive", "application/x-java-applet", "application/java", "application/zip"]);
+			error_log("Error: " . $error);
+			if ($error === false)
 			{	
 				error_log("J2ME upload");
 				$data = save_upload($_FILES["file-java"], "j2me", ["jar"], $device["msn"], ["mode" => "custom"]);
