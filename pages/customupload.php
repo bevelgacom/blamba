@@ -5,7 +5,7 @@ function sanity_check_file($file, $mime)
 {
 	if ($file["error"])
 		error_log("File upload error: " . $file["error"]);
-		return "Keine Datei ausgewaehlt oder Upload fehlgeschlagen";
+		return "Keine Datei ausgewaehlt oder Upload fehlgeschlagen: ".$file["error"];
 
 	if ($file["size"] > 2048 * 1024)
 		error_log("File too large: " . $file["size"]);
