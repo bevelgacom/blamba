@@ -106,7 +106,9 @@ if (isset($_POST["type"]))
 
 	$error = SMS::sanity_check_udh_array($data);
 	if (trim($data) == "")
-	{
+	{	
+		error_log("Conversion failed");
+		error_log($data);
 		$error = "Die Datei konnte nicht umgewandelt werden.";
 	}
 	if ($error == "")
