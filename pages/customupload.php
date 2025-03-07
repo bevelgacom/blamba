@@ -4,18 +4,22 @@ $devices = $db->prepared_fetch("SELECT * FROM devices WHERE user = ?;", "s", ses
 function sanity_check_file($file, $mime)
 {
 	if ($file["error"])
+		error_log("File upload error: " . $file["error"]);
 		return "Keine Datei ausgewaehlt oder Upload fehlgeschlagen";
 
 	if ($file["size"] > 2048 * 1024)
+		error_log("File too large: " . $file["size"]);
 		return "Datei zu gross";
 
 	if (!in_array($file["type"], $mime))
-	{
+	{	
+		error_log("Invalid MIME-Type in type: " . $file["type"]);
 		return "Falsch uebermittelter MIME-Type";
 	}
 
 	if (!in_array(mime_content_type($file['tmp_name']), $mime))
-	{
+	{	
+		error_log("Invalid MIME-Type in mime_content_type: " . mime_content_type($file['tmp_name']));
 		return "Falscher MIME-Type";
 	}
 
