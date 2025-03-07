@@ -33,7 +33,8 @@ function sanitize_filename($file, $extensions)
 	$extension = preg_replace('/[^a-z]/', '', strtolower($pathinfo['extension']));
 
 	if (!in_array($extension, $extensions))
-	{
+	{	
+		error_log("Invalid extension: " . $extension);
 		return false;
 	}
 
