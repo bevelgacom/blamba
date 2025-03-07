@@ -6,7 +6,7 @@ function sanity_check_file($file, $mime)
 	if ($file["error"])
 		return "Keine Datei ausgewaehlt oder Upload fehlgeschlagen";
 
-	if ($file["size"] > 512 * 1024)
+	if ($file["size"] > 2048 * 1024)
 		return "Datei zu gross";
 
 	if (!in_array($file["type"], $mime))
