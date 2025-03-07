@@ -8,19 +8,16 @@ function sanity_check_file($file, $mime)
 	// 	return "Keine Datei ausgewaehlt oder Upload fehlgeschlagen: ".$file["error"];
 
 	if ($file["size"] > 2048 * 1024)
-		error_log("File too large: " . $file["size"]);
-		return "Datei zu gross";
+		return "Datei zu gross". $file["size"];
 
 	if (!in_array($file["type"], $mime))
 	{	
-		error_log("Invalid MIME-Type in type: " . $file["type"]);
-		return "Falsch uebermittelter MIME-Type";
+		return "Falsch uebermittelter MIME-Type: ". $file["type"];
 	}
 
 	if (!in_array(mime_content_type($file['tmp_name']), $mime))
 	{	
-		error_log("Invalid MIME-Type in mime_content_type: " . mime_content_type($file['tmp_name']));
-		return "Falscher MIME-Type";
+		return "Falscher MIME-TypeL ". mime_content_type($file['tmp_name']);
 	}
 
 	return false;
@@ -65,6 +62,7 @@ if (isset($_POST["type"]))
 	$gateway = $db->prepared_fetch_one("SELECT * FROM gateways WHERE enabled = 1 AND id = ?;", "i", $device["gateway"]);
 
 	$data = "";
+	$error = "";
 
 	switch ($_POST["type"])
 	{
@@ -114,7 +112,8 @@ if (isset($_POST["type"]))
 	{	
 		error_log("Conversion failed");
 		error_log($data);
-		$error = "Die Datei konnte nicht umgewandelt werden.";
+		if ($error == "")
+			$error = "Die Datei konnte nicht umgewandelt werden.";
 	}
 	if ($error == "")
 	{
