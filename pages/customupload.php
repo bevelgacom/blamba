@@ -45,6 +45,7 @@ function save_upload($file, $type, $extensions, $msn, $data)
 {
 	global $userupload_path;
 	$filename = sanitize_filename($file, $extensions);
+	error_log("Filename: " . $filename);
 	if (!$filename)
 		return false;
 
@@ -98,7 +99,8 @@ if (isset($_POST["type"]))
 			break;
 		case 'j2me':
 			if (($error = sanity_check_file($_FILES["file-java"], ["application/java-archive", "application/x-java-applet", "application/java", "application/zip"])) === false)
-			{
+			{	
+				error_log("J2ME upload");
 				$data = save_upload($_FILES["file-java"], "j2me", ["jar"], $device["msn"], ["mode" => "custom"]);
 			}
 			break;
