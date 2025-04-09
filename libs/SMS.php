@@ -189,8 +189,8 @@ END:VCALENDAR";
 		global $config;
 
 		// Eventphone Number
-		if (strlen($sms_from) == 4)
-			return true;
+		//if (strlen($sms_from) == 4)
+		//	return true;
 
 		// C3GSM temporary numbers for unregistered devices
 		if (strlen($sms_from) == 10 && $sms_from[0] != "+")
